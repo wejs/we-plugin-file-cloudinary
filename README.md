@@ -4,6 +4,8 @@
 
 Suport for resize images based in image styles configuration
 
+This plugin adds the cloudinary storage strategy in We.js projects
+
 ## Installation
 
 ```sh
