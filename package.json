@@ -1,0 +1,44 @@
+{
+  "name": "we-plugin-file-cloudinary",
+  "description": "We.js we-plugin-file-cloudinary plugin",
+  "version": "1.0.0",
+  "main": "plugin.js",
+  "scripts": {
+    "test": "NODE_ENV=test LOG_LV=info ./node_modules/.bin/mocha test/bootstrap.js test/**/*.test.js",
+    "prepublish": "npm prune"
+  },
+  "dependencies": {
+    "cloudinary": "^1.3.1",
+    "uuid": "^2.0.2"
+  },
+  "devDependencies": {
+    "express-mysql-session": "^1.0.0",
+    "fs-extra": "^0.30.0",
+    "mocha": "^2.5.3",
+    "mysql": "^2.10.2",
+    "rimraf": "^2.5.2",
+    "supertest": "^1.2.0",
+    "we-core": "github:wejs/we-core",
+    "we-plugin-file": "github:wejs/we-plugin-user",
+    "we-plugin-user": "github:wejs/we-plugin-user",
+    "we-test-tools": "github:wejs/we-test-tools"
+  },
+  "keywords": [
+    "we.js",
+    "plugin",
+    "file",
+    "storage",
+    "cloudinary"
+  ],
+  "files": [
+    "files/public",
+    "lib",
+    "locales",
+    "server",
+    "install.js",
+    "plugin.js"
+  ],
+  "repository": "wejs/we-plugin-file-cloudinary",
+  "author": "Alberto Souza <contato@albertosouza.net>",
+  "license": "MIT"
+}

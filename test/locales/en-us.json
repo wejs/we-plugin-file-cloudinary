@@ -1,0 +1,5 @@
+{
+	"name must be unique": "name must be unique",
+	"response.notFound.title": "response.notFound.title",
+	"response.serveError.title": "response.serveError.title"
+}
