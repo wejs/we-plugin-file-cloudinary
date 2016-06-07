@@ -51,4 +51,4 @@ And add account configuration and change default storage in **config/local.js** 
 
 ## Copyright and license
 
-Under [the MIT license](https://github.com/wejs/we-core/blob/master/LICENSE.md).# we-plugin-file-cloudinary
+Under [the MIT license](https://github.com/wejs/we-core/blob/master/LICENSE.md).
