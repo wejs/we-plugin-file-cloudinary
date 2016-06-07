@@ -111,8 +111,6 @@ describe('cloudinaryStorage', function () {
           return done(err)
         }
 
-        console.log('return>', res.text)
-
         done()
       })
     })
