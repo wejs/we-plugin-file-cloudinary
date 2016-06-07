@@ -1,4 +1,4 @@
-# we-plugin-file-cloudinary :cloud:
+# We.js Cloudinary plugin :cloud:
 
 [Cloudinary](http://cloudinary.com) file storage plugin for [We.js](https://wejs.org/), upload files to Cloudinary and save metadata in file or image model
 
