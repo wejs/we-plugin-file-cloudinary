@@ -46,7 +46,7 @@ And add account configuration and change default storage in **config/local.js** 
 - run npm test
 
 #### NPM Info:
-[![NPM](https://nodei.co/npm/we-plugin-file.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/we-plugin-file/)
+[![NPM](https://nodei.co/npm/we-plugin-file-cloudinary.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/we-plugin-file-cloudinary/)
 
 
 ## Copyright and license
