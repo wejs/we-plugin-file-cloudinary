@@ -1,18 +1,18 @@
 /**
- * Plugin.js file, set configs, routes, hooks and events here
+ * Main We.js Clowndinary file storage plugin
  *
  * see http://wejs.org/docs/we/plugin
  */
 
-var uuid = require('uuid')
-var path = require('path')
-var cloudinaryStorage = require('./lib/CloudinaryStorage')
-var cloudinary = require('cloudinary')
+const uuid = require('uuid'),
+  path = require('path'),
+  cloudinaryStorage = require('./lib/CloudinaryStorage'),
+  cloudinary = require('cloudinary');
 
 module.exports = function loadPlugin (projectPath, Plugin) {
-  var plugin = new Plugin(__dirname)
+  const plugin = new Plugin(__dirname);
 
-  plugin.cloudinary = cloudinary
+  plugin.cloudinary = cloudinary;
 
   // set plugin configs
   plugin.setConfigs({
@@ -20,23 +20,23 @@ module.exports = function loadPlugin (projectPath, Plugin) {
       storages: {
         cloudinary: {
           isLocalStorage: false,
-          getStorage: function getStorage(we) {
+          getStorage(we) {
             if (!we.config.apiKeys.cloudinary) {
-              console.log('configure your cloudinary api keys in: we.config.apiKeys.cloudinary')
-              we.exit(function(){ process.exit() })
+              console.log('configure your cloudinary api keys in: we.config.apiKeys.cloudinary');
+              we.exit(function(){ process.exit(); });
             }
 
             cloudinary.config({
               cloud_name: we.config.apiKeys.cloudinary.cloud_name,
               api_key: we.config.apiKeys.cloudinary.api_key,
               api_secret: we.config.apiKeys.cloudinary.api_secret
-            })
+            });
 
             return cloudinaryStorage({
               cloudinary: cloudinary,
               getDestination: this.getDestination,
               filename: this.filename
-            })
+            });
           },
           /**
            * Send one file to user
@@ -46,43 +46,44 @@ module.exports = function loadPlugin (projectPath, Plugin) {
            * @param  {Object} res
            * @param  {String} style
            */
-          sendFile: function sendFile (file, req, res, style) {
-            if (!style) style = 'original'
+          sendFile(file, req, res, style) {
+            if (!style) style = 'original';
             // send to cloudinary file
-            res.redirect( ( file.urls[style] || file.urls.original) )
+            res.redirect( ( file.urls[style] || file.urls.original) );
           },
-          destroyFile: function destroyFile (file, done) {
+          destroyFile(file, done) {
             cloudinary.uploader
-            .destroy(file.extraData.public_id, function (result) {
+            .destroy(file.extraData.public_id, (result)=> {
 
               if (result.result != 'ok') {
-                plugin.we.log.error('error on delete image from cloudinary:', result)
+                plugin.we.log.error('error on delete image from cloudinary:', result);
               }
 
-              done()
-            })
+              return done();
+            });
           },
-          getUrlFromFile: function (format, file) {
+          getUrlFromFile(format, file) {
             if (!file.extraData) file.extraData = {
               public_id: file.public_id
-            }
+            };
 
-            file.name = file.wejsName
-            file.size = file.bytes
-            file.extension = '.'+file.format
+            file.name = file.wejsName;
+            file.size = file.bytes;
+            file.extension = '.'+file.format;
 
-            return file.secure_url
+            return file.secure_url;
           },
-          getDestination: function getDestination (style) {
-            if (!style) style = 'original'
-            return 'wejs-uploads/'+style
+          getDestination(style) {
+            if (!style) style = 'original';
+            return 'wejs-uploads/'+style;
           },
-          getPath: function getPath (style, name) {
+          getPath(style, name) {
             return path.join(
               this.getDestination(style),
               name
-            )
+            );
           },
+
           /**
            * Make unique file name
            *
@@ -90,20 +91,21 @@ module.exports = function loadPlugin (projectPath, Plugin) {
            * @param  {Object} file
            * @return {String}      new file name
            */
-          filename: function filename () {
-            return Date.now() + '_' + uuid.v1()
+          filename() {
+            return Date.now() + '_' + uuid.v1();
           },
 
-          generateImageStyles: function generateImageStyles (file, done) {
-            var we = plugin.we
-            var styles = we.config.upload.image.avaibleStyles
+          generateImageStyles(file, done) {
+            const we = plugin.we,
+              styles = we.config.upload.image.avaibleStyles;
 
-            for (var i = 0; i < styles.length; i++) {
-              this.resizeEach(styles[i], file, this)
+            for (let i = 0; i < styles.length; i++) {
+              this.resizeEach(styles[i], file, this);
             }
 
-            done()
+            done();
           },
+
           /**
            * Resize one image to fit image style size
            *
@@ -112,20 +114,32 @@ module.exports = function loadPlugin (projectPath, Plugin) {
            * @param  {Object}   uploader
            * @param  {Function} next         callback
            */
-          resizeEach: function resizeEach (imageStyle, file) {
-            var style = plugin.we.config.upload.image.styles[imageStyle]
+          resizeEach(imageStyle, file) {
+            const style = plugin.we.config.upload.image.styles[imageStyle];
 
             file.urls[imageStyle] = cloudinary
             .url(file.extraData.public_id, {
               width: style.width,
               height: style.width,
               crop: 'fit'
-            })
+            });
           }
         }
       }
     }
   });
+
+  /**
+   * Plugin fast loader
+   *
+   * Defined for faster project bootstrap
+   *
+   * @param  {Object}   we
+   * @param  {Function} done callback
+   */
+  plugin.fastLoader = function fastLoader(we, done) {
+    done();
+  };
 
   return plugin;
 };
