@@ -9,7 +9,7 @@ This plugin adds the cloudinary storage strategy in We.js projects
 ## Installation
 
 ```sh
-npm i --save we-plugin-file-cloudinary
+we i we-plugin-file-cloudinary
 ```
 
 ## Configuration
